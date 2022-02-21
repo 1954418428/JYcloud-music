@@ -19,13 +19,13 @@
             <li v-for="(item,index) in songs" :key="item.id"
             >
                 <span :style="index<3 ?'color:#c10d0c':''">{{index+1}}</span>
-                <a href="#">{{item.name}}</a>
+                <a href="javascript:void(0)">{{item.name}}</a>
 
                 <span  class="tools">
-                    <a href="#">
+                    <a href="javascript:void(0)" @click.prevent="bofangClicked(index)">
                         <i class="iconfont icon-bofang"></i>
                     </a>
-                    <a href="#">
+                    <a href="javascript:void(0)" @click.prevent="shoucangClicked(index)">
                         <i class="iconfont icon-shoucang"></i>
                     </a>
                 </span>
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-
+import {mapActions} from 'vuex';
 import {sheetApi} from '@/api';
 
 export default {
@@ -61,17 +61,52 @@ export default {
     },
     computed: {},
     watch: {},
-    methods: {},
+    methods: {
+      
+         ...mapActions('PlayerModule',[
+            "cutSongSheet","asyncUpdateIsLock","addNextSong","asyncUpdateIsLock"
+        ]),
+        ...mapActions('CollectModule',[
+           "collectClicked"
+        ]),
+        bofangClicked(index){
+             const song = this.songs[index];
+            // console.log(song);
+             this.cutSongSheet({
+                songs:this.songs,
+                currentIndex:index 
+            })
+            this.asyncUpdateIsLock({
+                isLock:true
+            })
+
+        },
+        shoucangClicked(index){
+            const song = this.songs[index];
+            const id =song.id;
+            this.collectClicked({tracks:[id]})
+        }
+    },
     beforeCreated() {},
     async created() {
-        const query ={
+        
+        const songs = JSON.parse(sessionStorage.getItem(`topplayId:${this.topPlayList.id}`));
+        if(songs && songs.length!=0){
+            this.songs = songs;
+        }else{
+            const query ={
             id:this.topPlayList.id,
             limit:10,
             offset:0,
+            }
+            const res = await sheetApi.getPlayListTrackAll(query)
+            // console.log(res);
+            this.songs =  res.songs;
+            sessionStorage.setItem(`topplayId:${this.topPlayList.id}`,JSON.stringify(this.songs))
         }
-        const res = await sheetApi.getPlayListTrackAll(query)
-        // console.log(res);
-        this.songs =  res.songs;
+        
+
+
     },
     beforeMount() {},
     mounted() {},

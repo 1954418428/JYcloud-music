@@ -1,6 +1,6 @@
 
 export default   function (target,showTargetEle,triggerTargetEle) {
-    // 当前单击的目标元素
+    // target 当前单击的目标元素
     // showTargetEle 要隐藏或显示的目标元素
     // triggerTargetEle触发显示showTargetEle的元素
 

@@ -17,8 +17,6 @@ Axios.defaults.withCredentials = true
 Axios.interceptors.request.use(function (config) {
     // 在发送请求之前做些什么
     // console.log("请求拦截器");
-    
-    
     const cookie=   JSON.parse(localStorage.getItem("vuex-data")).root.UserModule.userState.cookie;
     if(cookie){
         config.params.cookie = cookie;

@@ -2,7 +2,7 @@
     <div class="palylist-box">
         <div class="palylist-wrap">
             <div class="left-wrap">
-                <SongSheetDetail :playListDetail="playListDetail" :playListType="'专辑'"></SongSheetDetail>
+                <SongSheetDetail :playListDetail="playListDetail" :playListType="'专辑'" :songs="songs"></SongSheetDetail>
                 <SongSheet :songs="songs"  :trackCount="trackCount"></SongSheet>
             </div>
 

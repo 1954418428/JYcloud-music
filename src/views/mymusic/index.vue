@@ -7,7 +7,7 @@
                         我的歌手({{subCount.artistCount}})
                     </router-link>
                     <router-link to="/mymusic/mymv" tag="h2">
-                        我的歌手({{subCount.mvCount}})
+                        我的mv({{subCount.mvCount}})
                     </router-link>
 
                     <div class="myplaylist-wrap">

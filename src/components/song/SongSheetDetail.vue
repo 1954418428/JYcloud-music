@@ -12,7 +12,7 @@
 
             <div class="user" v-if="playListType!='专辑' && playListDetail.creator">
                 <img     :src="playListDetail.creator.avatarUrl +'?param=208y208'" alt="">
-                <a  href="#" style="color:#0c73c2;">{{playListDetail.creator.nickname}}</a>
+                <router-link  :to="`/user/home?id=${playListDetail.creator.userId}`" style="color:#0c73c2;">{{playListDetail.creator.nickname}}</router-link>
                 <span>{{moment(parseInt(playListDetail.createTime)).format('YYYY-MM-DD') + (playListType=="歌单"?' 创建':' 发布')}} </span>
             </div>
             <div v-else>
@@ -197,7 +197,7 @@ export default {
                      this.$message({
                         message: '此歌单无法收藏',
                         type: 'warning',
-                        duration:1000
+                        duration:1500
                     });
                 });
             }

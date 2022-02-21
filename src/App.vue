@@ -1,6 +1,6 @@
 <template>
 
-  <div id="app">
+  <div id="app" class="app">
 
     <!-- 顶部导航栏 -->
     <TopBar/>
@@ -21,6 +21,9 @@
     <CollectSheet></CollectSheet>
     <!-- 创建或修改歌单 -->
     <CreateSheet></CreateSheet>
+
+    <el-backtop target=".app" :visibility-height="100" :bottom="60"></el-backtop>
+<el-backtop></el-backtop>
   </div>
 </template>
 
@@ -60,4 +63,8 @@ export default {
       min-height: 100%;
 }
 
+.app{
+  // height: 100vh;
+  // overflow-x:hidden;
+}
 </style>
