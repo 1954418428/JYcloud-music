@@ -7,10 +7,10 @@
         >
             <div class="topbar-wrap">
                 <h1>
-                    <a href="/" class="web-link">
+                    <router-link to="/" class="web-link">
                         <img class="web-logo" src="@/assets/img/web-logo.jpeg" alt="">
                         简易云音乐
-                    </a>
+                    </router-link>
                 </h1>
 
                 <ul class="menu-warp">
