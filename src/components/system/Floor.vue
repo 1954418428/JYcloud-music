@@ -29,15 +29,17 @@
 
             <ul class="right">
                  <div class="author-wrap">
+                     <a href="https://github.com/1954418428/jycloud-music" target="_blank" class="img-a" title="项目github地址">
+                         <img src="../../assets/img/github.png" alt="">
+                     </a>
+                     
                     <p>作者：fzy</p>
                     <p>微信：madmanfzy</p>
                     <p>QQ：1954418428</p>
-                    <p>QQ交流群：1954418428</p>
-                    <p>GitHub：www.baidu.com</p>
                 </div>
                 <div class="img-wrap">
-                    <img class="img-item" src="@/assets/img/wx-erweima.jpg" title="扫码加站长QQ" alt="微信：madmanfzy">
-                    <img class="img-item" src="@/assets/img/wx-erweima.jpg" title="扫码进交流Q群" alt="QQ交流群：1954418428">
+                    <img class="img-item" src="@/assets/img/wx-erweima.jpg" title="扫码加作者微信" alt="微信：madmanfzy">
+                    <img class="img-item" src="@/assets/img/qq-erweima.png" title="扫码加作者qq" alt="QQ：1954418428">
                 </div>
             </ul>
         </div>
@@ -104,6 +106,7 @@ export default {
             }
             p{
                 height: 24px;
+                margin-bottom: 3px;
                 &:not(.web-service-item){
                     color: #666666;
                     
@@ -120,10 +123,19 @@ export default {
             display:flex;
             .author-wrap{
                 width: 160px;
-                & :nth-child(n){
+                p{
                     color: #333333;;
-                    margin-bottom: 3px;
+                    margin-bottom: 1px;
                 }
+                .img-a{
+                    display:inline-block;
+                    // text-align: center;
+                    img{
+                        height: 48px;
+                        width: 48px;
+                    }
+                }
+                
             }
             .img-wrap{
                 .img-item{

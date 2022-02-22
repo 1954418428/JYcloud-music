@@ -5,14 +5,15 @@
                     <img :src="topPlayList.coverImgUrl" :alt="topPlayList.name" class="top-img">
                 </router-link>
             
-                <div>
-                            
+                <div>      
                     <router-link :to="{path:'/topplaylist',query:{id:topPlayList.id}}">{{topPlayList.name}}</router-link>
                     <br>
                     <span>{{topPlayList.updateFrequency}}</span>
                     <br>
                     
-                    <i class="iconfont icon-bofang" style="position:relative;top:10px"></i>
+                    <router-link :to="{path:'/topplaylist',query:{id:topPlayList.id}}">
+                        <i class="iconfont icon-bofang" style="position:relative;top:10px"></i>
+                    </router-link>
                 </div>
         </div>
         <ul>
@@ -63,7 +64,7 @@ export default {
     watch: {},
     methods: {
       
-         ...mapActions('PlayerModule',[
+        ...mapActions('PlayerModule',[
             "cutSongSheet","asyncUpdateIsLock","addNextSong","asyncUpdateIsLock"
         ]),
         ...mapActions('CollectModule',[

@@ -9,7 +9,7 @@
             </div>
 
             <div class="right-wrap">
-                <div class="subscribers-wrap" v-if="$route.query.id != 'daily'">
+                <div class="subscribers-wrap" v-show="$route.query.id != 'daily' && subscribers.length">
                     <h3>
                         喜欢这个歌单的人
                     </h3>
@@ -27,12 +27,14 @@
                        
                 </div>
 
-                <div class="similarsheet-wrap" v-else>
+                <div class="similarsheet-wrap" v-show="recommendedPlayList.length">
                     <h3>
-                        我的歌单
+                        推荐歌单
                     </h3>
                     <div class="user-song-sheet">
-                        <!-- <SongSheetItem v-for="(o) in 5" :key="o"></SongSheetItem> -->
+                        <SongSheetItem v-for="(item) in recommendedPlayList" :key="item.id"
+                            :song-sheet-item="item"
+                         ></SongSheetItem>
                     </div>
                 </div>
             </div>
@@ -67,11 +69,15 @@ export default {
             //歌单类型
             playListType:'歌单',//歌单 每日推荐 专辑 榜单
             //喜欢这个歌单的人
-            subscribers:[]
+            subscribers:[],
+            //推荐歌单(登入/未登入)
+            recommendedPlayList:[]
         };
     },
     props:{},
-    computed: {},
+    computed: mapState('UserModule',[
+        "userState"
+    ]),
     watch: {
         '$route.query': {
             async handler (){
@@ -87,6 +93,20 @@ export default {
                 }
             },
             immediate: true
+        },
+        "userState.isLogin":{
+            async handler(){
+                const R = JSON.parse(sessionStorage.getItem(`${this.userState.isLogin}:PersonalizedPlayList`));
+                console.log(R);
+                const list = [];
+                for(let i =0;i<6;i++){
+                     if(R[i].id != this.$route.query.id){
+                        list.push(R[i])
+                    }
+                }
+                this.recommendedPlayList = list;
+            },
+            immediate:true
         }
     },
     methods: {
@@ -162,6 +182,7 @@ export default {
                 margin: 0 auto;
             }
             .subscribers-wrap{
+                margin-bottom: 20px;
                 ul{
                     display: flex;
                     flex-wrap: wrap;

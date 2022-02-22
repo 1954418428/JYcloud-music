@@ -49,7 +49,7 @@ export default {
     watch: {
         "player.isLock":{
             handler(){
-                console.log("player.isLock被改变,当前值为:",this.player.isLock);
+                // console.log("player.isLock被改变,当前值为:",this.player.isLock);
                 this.lockTimer(!this.player.isLock);
             },
             immediate: true
@@ -98,12 +98,12 @@ export default {
         },
         lockMusicPlayer(){
             if(this.player.isLock){
-                console.log("显示 -> 隐藏");
+                // console.log("显示 -> 隐藏");
                 this.asyncUpdateIsLock({
                     isLock:false
                 })
             }else{
-                console.log("隐藏 -> 显示");
+                // console.log("隐藏 -> 显示");
                 this.asyncUpdateIsLock({
                     isLock:true
                 })
