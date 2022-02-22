@@ -57,7 +57,9 @@ export default {
         }
     },
     beforeCreated() {},
-    created() {},
+    created() {
+        
+    },
     beforeMount() {},
     mounted() {},
     beforeUpdate() {},

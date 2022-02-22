@@ -97,7 +97,7 @@ export default {
         "userState.isLogin":{
             async handler(){
                 const R = JSON.parse(sessionStorage.getItem(`${this.userState.isLogin}:PersonalizedPlayList`));
-                console.log(R);
+                // console.log(R);
                 const list = [];
                 for(let i =0;i<6;i++){
                      if(R[i].id != this.$route.query.id){

@@ -18,11 +18,10 @@ export default {
         })
     },
     //获取歌单详情 包括歌单详情 和 歌曲列表（trackIds完整 tracks未登入时不完整）
-    //带上cookie subscribed为ture 表示次歌单被我收藏了
     getPlayListDetail:function(id){
         return new Promise((resolve,reject)=>{
             request.get('/playlist/detail',{
-                id,timestamp:new Date().getTime(),
+                id,timestamp:new Date().getTime()
             }).then(res=>{
                 resolve(res)
             }).catch(err=>{

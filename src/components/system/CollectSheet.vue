@@ -131,6 +131,9 @@ export default {
                             break;
                         }
                     }
+                    //删除缓存
+                    this.catchStorage.removeCatchItem(`playlistDetail:${pid}`);
+                    this.catchStorage.removeCatchItem(`playlistSongs:${pid}`);
                 }else{
                      this.$message({
                         message:res.body.message,

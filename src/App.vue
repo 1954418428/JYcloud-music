@@ -49,8 +49,21 @@ export default {
     methods: {},
     beforeCreated() {},
     created() {
-
+      //10分钟执行一次
+      this.workerTImer = setInterval(() => {
+        console.log(workerTImer);
+        for (let  i = 0; i < localStorage.length; i++) {
+            let key = localStorage.key(i); //获取本地存储的Key
+            if(key.startsWith(this.catchStorage.prefix)){
+              //取每一个缓存数据 过期的会被删除的 未过期了依然保留
+              this.catchStorage.getCatchItem(key);
+            }
+        }
+      }, 1000*60*20);
     },
+    mounted(){
+
+    }
     }
 </script>
 
@@ -58,7 +71,6 @@ export default {
 #app{
       background-color: rgb(245,245,245);
       position: relative;
-
       min-width: 980px;
       min-height: 100%;
 }

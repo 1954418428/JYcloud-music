@@ -128,7 +128,10 @@ export default {
         ]),
         ...mapState('CreateSheetModule',[
         "create"
-        ])
+        ]),
+         ...mapState('UserModule',[
+        "userInfo"
+        ]),
     },
     watch: {
        
@@ -162,6 +165,13 @@ export default {
                         }
                     })
                     this.updateIsOver({over:true});
+                    
+                     //删除缓存
+                    this.catchStorage.removeCatchItem(`userPlayList:${this.userInfo.userId}`);
+                    this.catchStorage.removeCatchItem(`userSubcount:${this.userInfo.userId}`);
+                
+                    
+
                     setTimeout(() => {
                         this.asyncupdateCreateBoxIsShow({isShow:false})
                     }, 100);
@@ -201,6 +211,11 @@ export default {
                         duration:1500
                 });
                 this.updateIsOver({over:true});
+
+                //删除缓存
+                this.catchStorage.removeCatchItem(`userPlayList:${this.userInfo.userId}`);
+                this.catchStorage.removeCatchItem(`playlistDetail:${this.create.playlist.id}`);
+
                 setTimeout(() => {
                     this.asyncupdateCreateBoxIsShow({isShow:false})
                 }, 100);

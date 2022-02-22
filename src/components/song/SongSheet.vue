@@ -315,7 +315,11 @@ export default {
                         type: 'success',
                         message: '删除成功!'
                     });
-                
+
+                    //删除缓存
+                    this.catchStorage.removeCatchItem(`playlistDetail:${this.$route.query.id}`);
+                    this.catchStorage.removeCatchItem(`playlistSongs:${this.$route.query.id}`);
+
                     }) 
                 }).catch(() => {
                 

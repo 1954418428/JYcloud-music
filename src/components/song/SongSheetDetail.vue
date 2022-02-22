@@ -124,16 +124,19 @@ export default {
     computed: {
         ...mapState('CreateSheetModule',[
         "create"
-        ])
+        ]),
+          ...mapState('UserModule',[
+        "userInfo"
+        ]),
     },
     watch: {
         'create.isOver'(){
             if(this.create.isOver && this.isMeCreated &&this.create.model==2){
-                    //本次操作是修改歌单
-                     console.log(this.create.model,this.create.playlist);
-                     this.playListDetail.name = this.create.playlist.name;
-                     this.playListDetail.description = this.create.playlist.desc;
-                     this.playListDetail.tags = this.create.playlist.tags;
+                //本次操作是修改歌单
+                console.log(this.create.model,this.create.playlist);
+                this.playListDetail.name = this.create.playlist.name;
+                this.playListDetail.description = this.create.playlist.desc;
+                this.playListDetail.tags = this.create.playlist.tags;
             }
         }
     },
@@ -201,6 +204,9 @@ export default {
                     });
                 });
             }
+            //删除缓存
+            this.catchStorage.removeCatchItem(`userPlayList:${this.userInfo.userId}`);
+            this.catchStorage.removeCatchItem(`userSubcount:${this.userInfo.userId}`);
         }
     },
     beforeCreated() {},

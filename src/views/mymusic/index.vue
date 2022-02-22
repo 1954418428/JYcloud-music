@@ -123,7 +123,6 @@ export default {
                             this.CreatedPlaylist[i].name = this.create.playlist.name;
                             this.CreatedPlaylist[i].tags = this.create.playlist.tags;
                             this.CreatedPlaylist[i].description = this.create.playlist.desc;
-
                              break;
                          }
                      }
@@ -156,26 +155,27 @@ export default {
        ...mapActions('CreateSheetModule',[
            'asyncupdateCreateBoxIsShow'
        ]),
-        initPlaylist(){
-            sheetApi.getUserPlayList(this.userInfo.userId)
-            .then(res=>{
-                const CreatedPlaylist = [];
-                const SubPlaylist = [];
-                res.playlist.forEach(item=>{
-                    if(item.subscribed){
-                        SubPlaylist.push(item)
-                    }else{
-                        CreatedPlaylist.push(item)
-                        this.CreatedPlaylistIds.push(item.id)
-                    }
-                })
-                this.CreatedPlaylist = CreatedPlaylist;
-                this.SubPlaylist = SubPlaylist;
-                
-                if('/mymusic' == this.$route.fullPath){
-                   this.$router.push(`/mymusic/myplaylist?id=${CreatedPlaylist[0].id}`)
-                 }
+        async initPlaylist(){
+            let playlist = this.catchStorage.getCatchItem(`userPlayList:${this.userInfo.userId}`);
+            console.log(playlist);
+            if(!playlist){
+                    const  res = await sheetApi.getUserPlayList(this.userInfo.userId)
+                    playlist = res.playlist;
+                    this.catchStorage.setCatchItem(`userPlayList:${this.userInfo.userId}`,playlist,60)
+                    
+            }
+
+            this.CreatedPlaylist = playlist.slice(0,this.subCount.createdPlaylistCount);
+            this.CreatedPlaylist.forEach(item=>{
+                this.CreatedPlaylistIds.push(item.id)
             })
+            this.SubPlaylist = playlist.slice(this.subCount.createdPlaylistCount,playlist.length);;
+             if('/mymusic' == this.$route.fullPath){
+                this.$router.push(`/mymusic/myplaylist?id=${this.CreatedPlaylist[0].id}`)
+            }
+
+                   
+
         },
         //修改歌单
         updatePlaylist(item){
@@ -198,7 +198,6 @@ export default {
                     sheetApi.deletePlaylist(item.id)
                     .then(res=>{
                         console.log(res);
-                        
                         this.$message({
                             type: 'success',
                             message: '删除成功!'
@@ -207,6 +206,13 @@ export default {
                         this.CreatedPlaylist.splice(index,1);
                         this.CreatedPlaylistIds.splice(index,1);
                         this.subCount.createdPlaylistCount -=1;
+
+                         //删除缓存
+                        this.catchStorage.removeCatchItem(`userPlayList:${this.userInfo.userId}`);
+                        this.catchStorage.removeCatchItem(`userSubcount:${this.userInfo.userId}`);
+                        this.catchStorage.removeCatchItem(`playlistDetail:${item.id}`);
+                        this.catchStorage.removeCatchItem(`playlistSongs:${item.id}`);
+
                     }).catch(err=>{
 
                     })
@@ -218,14 +224,18 @@ export default {
    
     },
     beforeCreated() {},
-    created() {
-        userApi.getUserSubcount().then(res=>{
-            const {mvCount,artistCount,createdPlaylistCount,subPlaylistCount} = res;
-            this.subCount.mvCount = mvCount;
-            this.subCount.artistCount = artistCount;
-            this.subCount.createdPlaylistCount = createdPlaylistCount;
-            this.subCount.subPlaylistCount = subPlaylistCount;
-        })
+    async created() {
+        let res = this.catchStorage.getCatchItem(`userSubcount:${this.userInfo.userId}`);
+        if(!res){
+            res =  await userApi.getUserSubcount();
+            this.catchStorage.setCatchItem(`userSubcount:${this.userInfo.userId}`,res,3)
+        }
+        const {mvCount,artistCount,createdPlaylistCount,subPlaylistCount} = res;
+        this.subCount.mvCount = mvCount;
+        this.subCount.artistCount = artistCount;
+        this.subCount.createdPlaylistCount = createdPlaylistCount;
+        this.subCount.subPlaylistCount = subPlaylistCount;
+
         this.initPlaylist()
 
         

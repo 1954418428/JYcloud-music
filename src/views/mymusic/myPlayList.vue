@@ -59,33 +59,54 @@ export default {
         }
     },
     methods: {
-        initPlayList(pid){
-            sheetApi.getPlayListDetail(pid)
-            .then(res=>{
-                // console.log("getPlayListDetail");
-                this.songs =[];
+         async initPlayList(pid){
+            this.songs =[];
+
+            //获取歌单详情
+            let playlist = this.catchStorage.getCatchItem(`playlistDetail:${pid}`);
+            // console.log(playlist);
+            if(!playlist){
+                console.log(`playlist:${pid}无缓存`);
+                sheetApi.getPlayListDetail(pid)
+                .then(res=>{
+                    playlist=res.playlist;
+                    this.catchStorage.setCatchItem(`playlistDetail:${pid}`,playlist,5);
+                    //歌单详情
+                    const {id,name,coverImgUrl,createTime,trackCount,playCount,subscribedCount,subscribed,description,tags,creator} = playlist;
+                    const playListDetail ={id,name,coverImgUrl,createTime,trackCount,playCount,subscribedCount,subscribed,description,tags,creator};
+                    this.playListDetail = playListDetail;
+                    this.playCount = playCount;
+                    this.trackCount= trackCount;
+                })
+            }else{
                 //歌单详情
-                const {id,name,coverImgUrl,createTime,trackCount,playCount,subscribedCount,subscribed,description,tags,creator} =  res.playlist;
-                
-                const playListDetail ={id,name,coverImgUrl,createTime,trackCount,playCount,subscribedCount,subscribed,description,tags,creator
-                    
-                };
+                const {id,name,coverImgUrl,createTime,trackCount,playCount,subscribedCount,subscribed,description,tags,creator} = playlist;
+                const playListDetail ={id,name,coverImgUrl,createTime,trackCount,playCount,subscribedCount,subscribed,description,tags,creator};
                 this.playListDetail = playListDetail;
                 this.playCount = playCount;
                 this.trackCount= trackCount;
-            });
+            }
+           
+            //获取歌单所有歌曲
+            let songs = this.catchStorage.getCatchItem(`playlistSongs:${pid}`);
+            if(!songs){
+                console.log(`playlistSongs:${pid}无缓存`);
+                sheetApi.getPlayListTrackAll({id:pid,limit:1000,offset:0,timestamp:new Date().getTime()})
+                .then(res=>{
+                    songs = res.songs
+                    this.catchStorage.setCatchItem(`playlistSongs:${pid}`,songs,5);
+                    this.songs = songs
 
-            sheetApi.getPlayListTrackAll({id:this.$route.query.id,limit:1000,offset:0,timestamp:new Date().getTime()})
-            .then(res=>{
-                // console.log("getPlayListTrackAll");
-                this.songs = res.songs
-                
-            });
+                })
+            }else{
+                this.songs = songs
+            }
         },
         deleteCreatedPlaylistSong(index){
             console.log(index);
             this.songs.splice(index,1);
             this.trackCount-=1;
+            this.playListDetail.trackCount -=1;
         },
      
     },

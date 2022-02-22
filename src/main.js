@@ -2,9 +2,9 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-
 import moment from 'moment';
-;
+
+import CatchStorage from '@/utils/catch'
 
 
 import '@/assets/css/reset.css' //重置样式
@@ -13,9 +13,9 @@ import '@/assets/css/iconfont.css' //阿里图标库样式
 // 引入element-ui
 import 'element-ui/lib/theme-chalk/index.css'
 import ElementUI from 'element-ui';
-
-
 Vue.use(ElementUI)
+
+
 
 Vue.config.productionTip = false
 
@@ -32,6 +32,9 @@ Vue.prototype.formatTime =function(second){
   // 两位数时 抛弃首个0
   return ('0'+mimute).slice(-2)+":"+('0'+second).slice(-2)
 }
+
+// 缓存数据
+Vue.prototype.catchStorage = new CatchStorage();
 
 Vue.prototype.parseCount = function (Count) {  
   if(Count < 10000){

@@ -22,12 +22,25 @@
         }
     </style>
 </head>
-<body onclick="c(event)" style="height: 2000px;">
+<body >
 
- 
+    <script src="../src/utils/catch.js">
+    </script>
 
     <script>
-
+        const catchStorage = new CatchStorage();
+        catchStorage.setCatchItem("k",{1:1,2:2},1)
+        
+        console.log(new Date());
+        setInterval(() => {
+            const data = catchStorage.getCatchItem("k");
+  
+            if(data){
+                console.log('获取了',new Date());
+            }else{
+                console.log("过期了",new Date());
+            }
+        }, 5000);
     </script>
 </body>
 </html>
