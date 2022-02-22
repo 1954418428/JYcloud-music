@@ -37,7 +37,7 @@ export default {
             this.topList = res.list.slice(0,4)
         }
        
-
+        this.$emit('emitFirstTopPlayListId',this.topList[0].id)
     },
     beforeMount() {},
     mounted() {},

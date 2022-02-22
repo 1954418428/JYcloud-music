@@ -4,7 +4,7 @@
         <div class="DailySongsItem">
             <router-link  class="img-a" to="/playlist?id=daily"
             >
-                <img :src="dailyImg(dailySongsItem.day)" alt="" class="song-sheet-img">
+                <img :src="require( '@/assets/img/rili/'+dailySongsItem.day+'.png')" alt="" class="song-sheet-img">
             </router-link>
             
             <div class="ct">
@@ -47,8 +47,16 @@ export default {
     watch: {
         "userState.isLogin":{
             async handler(){
-                const res = await sheetApi.getPersonalizedPlayList({timestamp:new Date().getTime()});
-                this.PersonalizedPlayList  = res.result.slice(0,9)
+
+                const personalizedPlayList = JSON.parse(sessionStorage.getItem(`${this.userState.isLogin}:PersonalizedPlayList`));
+
+                if(personalizedPlayList && personalizedPlayList.length!=0){
+                    this.PersonalizedPlayList = personalizedPlayList;
+                }else{
+                    const res = await sheetApi.getPersonalizedPlayList({timestamp:new Date().getTime()});
+                    this.PersonalizedPlayList  = res.result.slice(0,9)
+                    sessionStorage.setItem(`${this.userState.isLogin}:PersonalizedPlayList`,JSON.stringify(this.PersonalizedPlayList))
+                }
                 this.initDailySongsItem()  
             },
             immediate:true
@@ -66,27 +74,10 @@ export default {
             }
         },
 
-        dailyImg(day){
-            // return require( '@/assets/img/rili/'+day+'.png');
-        }
     },
     beforeCreated() {},
-    async created() {
-        // console.log("song-sheet-box-created");
-        // if(sessionStorage.getItem('PersonalizedPlayList')){
-        //     const PersonalizedPlayList = JSON.parse(sessionStorage.getItem('PersonalizedPlayList'));
-        //     this.PersonalizedPlayList = PersonalizedPlayList;
-        // }else{
-        //     const res = await sheetApi.getPersonalizedPlayList();
-        //     sessionStorage.setItem("PersonalizedPlayList",JSON.stringify((res.result.slice(0,9))))
-        //     this.PersonalizedPlayList  = res.result.slice(0,9)
-        // }
-        this.$nextTick(()=>{
-            this. dailyImg=function(day){
-                return require( '@/assets/img/rili/'+day+'.png');
-            }
-        })
-            
+    created() {
+
     },
     beforeMount() {},
     mounted() {

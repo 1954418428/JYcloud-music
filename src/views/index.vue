@@ -8,10 +8,10 @@
             <div class="content-wrap">
                 <div class="wrap-head">
                     <i class="iconfont icon-ditu-huan"></i>
-                    <a href="/discoverplaylist">
+                    <router-link to="/discoverplaylist">
                         推荐歌单
                         <i class="iconfont icon-xiangyoujiantou"></i>
-                    </a>
+                    </router-link>
                 </div>
                 <SongSheetBox></SongSheetBox>
             </div>
@@ -19,12 +19,12 @@
             <div class="content-wrap">
                 <div class="wrap-head">
                     <i class="iconfont icon-ditu-huan"></i>
-                    <a href="/topplaylist">
+                    <router-link :to="`/topplaylist?id=${firstTopPlayListId}`">
                         榜单
                         <i class="iconfont icon-xiangyoujiantou"></i>
-                    </a>
+                    </router-link>
                 </div>
-                <TopSongSheetBox></TopSongSheetBox>
+                <TopSongSheetBox @emitFirstTopPlayListId="getFirstTopPlayListId"></TopSongSheetBox>
             </div>
             
         </div>
@@ -45,13 +45,17 @@ export default {
     components: {Carousel,SongSheetBox,TopSongSheetBox},
     data() {
         return {
-
+            firstTopPlayListId:0,
         };
     },
     props:{},
     computed: {},
     watch: {},
-    methods: {},
+    methods: {
+        getFirstTopPlayListId(id){
+            this.firstTopPlayListId=id;
+        }
+    },
     beforeCreated() {},
     created() {},
     beforeMount() {},
@@ -77,6 +81,7 @@ export default {
             padding-top: 12px;
             margin: 0 10px;
             margin-bottom: 12px;
+            padding-bottom: 6px;
             color: #333;
             border-bottom: 2px solid #C10D0C;
 
@@ -85,6 +90,7 @@ export default {
                 color: rgb(193,13,12);
                 margin-right: 6px;
             }
+          
             a:hover{
                 color: #000;
             }

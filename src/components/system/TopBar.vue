@@ -146,7 +146,10 @@ export default {
             "logout"
         ]),
         async logoutClicked(){
-            
+            //退出时 先删除推荐歌单 然后那会监听到退出登入 发请求获取新的未登入的推荐歌单
+            sessionStorage.removeItem('true:PersonalizedPlayList')
+            sessionStorage.removeItem('false:PersonalizedPlayList')
+
             const r= await this.logout();
             // console.log(r);
             this.$router.push("/")
