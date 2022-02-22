@@ -9,14 +9,24 @@
             </div>
 
             <div class="right-wrap">
-                <div class="similarsheet-wrap" v-if="$route.query.id != 'daily'">
+                <div class="subscribers-wrap" v-if="$route.query.id != 'daily'">
                     <h3>
-                        相似歌单
+                        喜欢这个歌单的人
                     </h3>
-                    <div class="similar-song-sheet">
-                        <!-- <SongSheetItem v-for="(o) in 5" :key="o"></SongSheetItem> -->
-                    </div>
+                    <ul>
+                            <li v-for="(item) in subscribers" :key="item.userId">
+                                <router-link :to="`/user/home?id=${item.userId}`">
+                                <div>
+                                    <img :src="item.avatarUrl+'?param=40y40'" alt="用户头像" :title="item.nickname">
+                                </div>
+                                </router-link>
+                            
+                            </li>
+
+                    </ul>
+                       
                 </div>
+
                 <div class="similarsheet-wrap" v-else>
                     <h3>
                         我的歌单
@@ -56,6 +66,8 @@ export default {
             trackCount:0,
             //歌单类型
             playListType:'歌单',//歌单 每日推荐 专辑 榜单
+            //喜欢这个歌单的人
+            subscribers:[]
         };
     },
     props:{},
@@ -81,11 +93,12 @@ export default {
         async initPlayListData(pid){
             sheetApi.getPlayListDetail(pid).then(res=>{
                 //歌单详情
-                const {id,name,coverImgUrl,createTime,trackCount,playCount,subscribedCount,subscribed,description,tags,creator} =  res.playlist;
+                const {id,name,coverImgUrl,createTime,trackCount,playCount,subscribedCount,subscribed,description,tags,creator,subscribers} =  res.playlist;
                 const playListDetail ={id,name,coverImgUrl,createTime,trackCount,playCount,subscribedCount,subscribed,description,tags,creator};
                 this.playListDetail = playListDetail;
                 this.playCount = playCount;
                 this.trackCount= trackCount;
+                this.subscribers = subscribers;
             });
             sheetApi.getPlayListTrackAll({id:this.$route.query.id,limit:1000,offset:0}).then(res=>{
                 this.songs = res.songs
@@ -134,6 +147,7 @@ export default {
         }
         .right-wrap{
             width: 270px;
+            padding: 20px;
             border-left: 1px solid rgba($color: #000000, $alpha: 0.3);
             h3{
                 height: 35px;
@@ -141,10 +155,21 @@ export default {
                 font-size: 20px;
                 font-weight: 700;
                 text-align: center;
-                padding: 10px 0;
+                margin: 10px 0;
+                border-bottom: 1px  solid rgba($color: #000000, $alpha: 0.2);
             }
             /deep/ .song-sheet-item-box{
                 margin: 0 auto;
+            }
+            .subscribers-wrap{
+                ul{
+                    display: flex;
+                    flex-wrap: wrap;
+                    li{
+                        margin-right: 17px;
+                        margin-bottom:10px;
+                    }
+                }
             }
         }
     } 
