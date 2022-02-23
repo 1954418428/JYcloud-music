@@ -17,9 +17,36 @@
             </div>
 
      
-            <div class="floor-wrap">
-                <Replay></Replay>
-                <Comment v-for="o in 50" :key="o"></Comment>
+            <div class="music-comment">
+                <div class="comment-head">
+                        <h3>
+                            评论
+                        </h3>
+                        <span>
+                            共{{page.total}}条评论
+                        </span>
+                </div>
+                <div class="reply-wrap">
+                        <Replay></Replay>
+                    </div>
+
+                    <div v-show="hotComments.length">
+                        <h4>热门评论</h4>
+                        <ul>
+                            <li v-for="item in hotComments" :key="item.commentId">
+                                <Comment :comment="item"></Comment>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div v-show="comments.length">
+                         <h4>最新100条评论</h4>
+                        <ul>
+                            <li v-for="item in comments" :key="item.commentId">
+                                <Comment :comment="item"></Comment>
+                            </li>
+                        </ul>
+                    </div>   
             </div>
 
         </div> 
@@ -34,18 +61,48 @@ import Lyric from '../../components/song/Lyric';
 import Replay from '../../components/system/Replay';
 import Comment from '../../components/system/Comment';
 
-
+import {songApi} from '@/api';
 export default {
     name: "",
     components: {PlayingSheet,MusicPlayerTools,Lyric,Replay,Comment},
     data() {
         return {
-      
+              page:{
+                currentIndex:1,//当前评论是第几页
+                limit:100,//数量
+                offset:0,//偏移量
+                total:0,//评论总数
+            },
+            hotComments:[],//热评
+            comments:[],//新评论
         };
     },
     props:{},
     computed: {},
-    watch: {},
+    watch: {
+        '$route.query.id':{
+            handler(){
+                this.hotComments = []
+                this.comments=[]
+                songApi.getSongCommentList(
+                    {
+                        id:this.$route.query.id,
+                        limit:100,
+                        offset:0
+                    }
+                ).then(res=>{
+                    console.log(res);
+                    //评论总数
+                    this.page.total = res.total
+                    //热评
+                    this.hotComments = res.hotComments;
+                    //新评
+                    this.comments = res.comments;
+                })
+            },
+            immediate:true
+        }
+    },
     methods: {},
     beforeCreated() {},
     created() {
@@ -136,11 +193,28 @@ export default {
         }
     }
     
-    .floor-wrap{
+    .music-comment{
         width: 100%;
-        
         margin-top: 20px;
-        // background-color: red;
+        .comment-head{
+            height: 32px;
+            line-height: 32px;
+            border-bottom: 2px solid #c20c0c;
+            h3{
+                float: left;
+                font-size: 20px;
+                margin-right: 16px;
+            }
+            span{
+                float: left;
+            }
+        }
+        h4{
+            padding: 4px;
+            font-size: 14px;
+            border-bottom: 1px solid rgba($color: #000000, $alpha: 0.2);
+        }
+       
     }
 }
 </style>

@@ -77,11 +77,7 @@
                                 <Comment :comment="item"></Comment>
                             </li>
                         </ul>
-                    </div>
-                       
-        
-                    
-                    
+                    </div>   
                 </div>
 
             </div>

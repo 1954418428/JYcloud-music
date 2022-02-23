@@ -4,11 +4,9 @@
         <img v-if="comment.commentId" :src="comment.user.avatarUrl" alt="" class="user-img">
         <div class="right-box" :style="comment.commentId?'border-bottom: 1px dashed  rgb(0, 0, 0,0.5);':''">
             <!-- `?id=${comment.user.userId}` -->
-            <router-link :to="'#'" class="user-name">{{comment.user.nickname}}</router-link>
+            <router-link :to="`/user/home?id=${comment.user.userId}`" class="user-name">{{comment.user.nickname}}</router-link>
             <div class="comment-content">
-
              <!-- <span>回复 <a>张三</a> :</span> -->
-
                 {{comment.content}}
             </div>
 

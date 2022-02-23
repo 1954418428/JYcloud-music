@@ -1,8 +1,12 @@
 <template>
     <div class="reply-item-box">
         <div style="text-align:center;margin-right:8px">
-            <img src="@/assets/img/web-logo.jpeg" alt="" class="user-img" :style="{height: size + 'px',width: size + 'px'}">
-            <div class="user-name">范得乐</div>
+            <img 
+            v-lazy="{src:userInfo.avatarUrl, error: require('@/assets/img/用户.png'), loading: require('@/assets/img/用户.png')}"
+            alt="" class="user-img" :style="{height: size + 'px',width: size + 'px'}">
+            <div class="user-name">
+                {{userInfo.nickname || '用户名'}}
+            </div>
         </div>
 
         <div style="width:100%">
@@ -16,13 +20,14 @@
 </template>
 
 <script>
+import {mapState} from 'vuex';
 
 export default {
     name: "ReplyItem",
     components: {},
     data() {
         return {
-            conntent:'11'
+            conntent:''
         };
     },
     props:{
@@ -30,7 +35,11 @@ export default {
            default:60
        }
     },
-    computed: {},
+    computed: {
+        ...mapState("UserModule",[
+            'userInfo'
+        ])
+    },
     watch: {},
     methods: {},
     beforeCreated() {},
