@@ -4,7 +4,13 @@
         <div class="DailySongsItem">
             <router-link  class="img-a" to="/playlist?id=daily"
             >
-                <img :src="require( '@/assets/img/rili/'+dailySongsItem.day+'.png')" alt="" class="song-sheet-img">
+                <img 
+                
+            v-lazy="{src: require( '@/assets/img/rili/'+dailySongsItem.day+'.png'),
+            error:require( '@/assets/img/rili/'+dailySongsItem.day+'.png'), 
+            loading: require( '@/assets/img/rili/'+dailySongsItem.day+'.png')}"
+
+                 alt="" class="song-sheet-img">
             </router-link>
             
             <div class="ct">
