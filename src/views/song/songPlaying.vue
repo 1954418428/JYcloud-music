@@ -61,6 +61,7 @@ import Lyric from '../../components/song/Lyric';
 import Replay from '../../components/system/Replay';
 import Comment from '../../components/system/Comment';
 
+import {mapState} from 'vuex';
 import {songApi} from '@/api';
 export default {
     name: "",
@@ -77,8 +78,14 @@ export default {
             comments:[],//新评论
         };
     },
-    props:{},
-    computed: {},
+    props:{
+        
+    },
+    computed: {
+        ...mapState("PlayerModule",[
+            "audio"
+        ])
+    },
     watch: {
         '$route.query.id':{
             handler(){
@@ -91,7 +98,7 @@ export default {
                         offset:0
                     }
                 ).then(res=>{
-                    console.log(res);
+                    // console.log(res);
                     //评论总数
                     this.page.total = res.total
                     //热评
@@ -99,6 +106,12 @@ export default {
                     //新评
                     this.comments = res.comments;
                 })
+            },
+            immediate:true
+        },
+        'audio.id':{
+            handler(){
+                this.$router.push(`/songplaying?id=${this.audio.id}`)
             },
             immediate:true
         }

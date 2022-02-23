@@ -163,7 +163,7 @@ export default {
         },
         //格式化歌词
         parseLyric(lyric){
-            console.log(lyric);
+            // console.log(lyric);
             let reg = /\n/
             const lineArr = lyric.split(reg)
             reg = /\[\d{2}:\d{2}.\d{2,3}\]/
@@ -212,7 +212,7 @@ export default {
                 uid : Math.random().toString().slice(-6)
 
             })
-            console.log(R);
+            // console.log(R);
             return R;
         },
         initLyric(id){
@@ -223,18 +223,18 @@ export default {
                 this.lyricArr = this.parseLyric(this.lyric)
                 // console.log(this.lyricArr );
                 this.$nextTick(()=>{
-                    console.log(this.$refs.lyricUL);
+                    // console.log(this.$refs.lyricUL);
                     this.lyricULHeight = this.$refs.lyricUL.offsetHeight;
                     this.lyricLiHeight = this.$refs.lyricLI[0].offsetHeight;
                     this.scrollHeight = this.$refs.lyricLI.length * this.lyricLiHeight;
                     this.top = 0;
                     this.offsetTime = 0;
                     this.$refs.lyricUL.scrollTo(0,0); 
-                    console.log("ul高:",this.lyricULHeight);
-                    console.log("li高:",this.lyricLiHeight);
-                    console.log("li个数:",this.$refs.lyricLI.length);
-                    console.log("滚动条高:",this.scrollHeight);
-                    console.log(document.getElementById("lyric-ul").offsetTop);          
+                    // console.log("ul高:",this.lyricULHeight);
+                    // console.log("li高:",this.lyricLiHeight);
+                    // console.log("li个数:",this.$refs.lyricLI.length);
+                    // console.log("滚动条高:",this.scrollHeight);
+                    // console.log(document.getElementById("lyric-ul").offsetTop);          
                     
                     //立马跳到播放音乐的位置
                     for(let i =0;i<this.lyricArr.length;i++){
