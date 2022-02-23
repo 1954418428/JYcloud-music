@@ -3,7 +3,9 @@
         <div class="userhome-wrap">
             <div class="user-info-wrap">
                 <div class="user-img">
-                    <img :src="userData.profile.avatarUrl" alt="">
+                    <img
+                    v-lazy="{src: userData.profile.avatarUrl+'?param=180y180', error: require('@/assets/img/用户.png'), loading: require('@/assets/img/用户.png')}"
+                    alt="">
                 </div>
                 <div class="user-info">
                     <h2>

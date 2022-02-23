@@ -42,7 +42,9 @@
                     <li v-for="item in mvList" :key="item.id">
                         <div class="mv-img">
                             <router-link :to="`/mv?id=${item.id}`">
-                                <img :src="item.cover+'?param=290y160'" alt="">
+                                 <img 
+                                v-lazy="{src: item.cover+'?param=290y160', error: require('@/assets/img/mv.png'), loading: require('@/assets/img/mv.png')}"
+                                 alt="">
                             </router-link>
                             <span class="play-count">
                                 <i class="iconfont icon-video"></i>

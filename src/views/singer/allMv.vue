@@ -4,7 +4,10 @@
             <li class="mv-item" v-for="(item) in mvList" :key="item.id">
                 <div  class="mv-img">
                     <router-link :to="`/mv?id=${item.id}`">
-                        <img :src="item.imgurl+'?param=137y103'" alt="">
+                        <img 
+                        v-lazy="{src: item.imgurl+'?param=137y103', error: require('@/assets/img/mv.png'), loading: require('@/assets/img/mv.png')}"
+                        alt="">
+
                     </router-link>
 
                 </div>

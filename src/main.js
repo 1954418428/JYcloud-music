@@ -15,6 +15,8 @@ import 'element-ui/lib/theme-chalk/index.css'
 import ElementUI from 'element-ui';
 Vue.use(ElementUI)
 
+import VueLazyload from "vue-lazyload";
+Vue.use(VueLazyload);
 
 
 Vue.config.productionTip = false

@@ -2,7 +2,7 @@
     <div>
         <div class="top">
             <a href=""  class="head-img">
-                <img  :src="audio.album.picUrl" alt="">
+                <img  v-lazy="{src: audio.album.picUrl, error: require('@/assets/img/音乐.png'), loading: require('@/assets/img/音乐.png')}" alt="">
                 {{audio.author}}
             </a>
             <div class="audio-name">

@@ -55,7 +55,10 @@
                                 tag="li"
                                 exact
                             >
-                                <img :src="item.coverImgUrl+'?param=40y40'" alt="">
+                                <img  
+                                v-lazy="{src: item.coverImgUrl+'?param=40y40', error: require('@/assets/img/歌单.png'), loading: require('@/assets/img/歌单.png')}"
+                                alt=""
+                                > 
                                 {{item.name}}
                             </router-link>
                          

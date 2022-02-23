@@ -2,7 +2,7 @@
      <div class="song-sheet-detail" >
 
         <div class="sheet-img-wrap">
-            <img :src="playListDetail.coverImgUrl" alt="" class="sheet-img">
+            <img v-lazy="{src: playListDetail.coverImgUrl+'?param=208y208', error: require('@/assets/img/歌单.png'), loading: require('@/assets/img/歌单.png')}" alt="" class="sheet-img">
         </div>
         <div class="sheet-info-wrap">
             <div class="title">
@@ -11,7 +11,8 @@
             </div>
 
             <div class="user" v-if="playListType!='专辑' && playListDetail.creator">
-                <img     :src="playListDetail.creator.avatarUrl +'?param=208y208'" alt="">
+                <img     :src="playListDetail.creator.avatarUrl +'?param=208y208'"
+                 alt="">
                 <router-link  :to="`/user/home?id=${playListDetail.creator.userId}`" style="color:#0c73c2;">{{playListDetail.creator.nickname}}</router-link>
                 <span>{{moment(parseInt(playListDetail.createTime)).format('YYYY-MM-DD') + (playListType=="歌单"?' 创建':' 发布')}} </span>
             </div>

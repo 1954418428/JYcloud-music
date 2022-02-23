@@ -5,7 +5,12 @@
         <router-link :to="`/playlist?id=${songSheetItem.id}`"  class="img-a"
        
         >
-            <img :src="songSheetItem.picUrl ||songSheetItem.coverImgUrl+'?param=160y160'" alt="" class="song-sheet-img">
+            <img  
+            v-lazy="{src: (songSheetItem.picUrl ||songSheetItem.coverImgUrl)+'?param=160y160', error: require('@/assets/img/歌单.png'), loading: require('@/assets/img/歌单.png')}"
+            alt=""
+            class="song-sheet-img"
+            > 
+
             <router-link :to="`/playlist?id=${songSheetItem.id}`" class="bofang-btn" v-show="bofangBtnIsShow" 
             @mouseover="bofangBtnIsShow =  true" 
             @mouseleave="bofangBtnIsShow = false">

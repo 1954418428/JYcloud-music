@@ -8,7 +8,9 @@
                         <h2>{{artist.name}}</h2>
                     </div>
                     <div class="singer-img">
-                       <img :src="artist.cover+'?param=640y300'" alt="">
+                       <img
+                        v-lazy="{src: artist.cover+'?param=640y300', error: require('@/assets/img/歌手详情.jpg'), loading: require('@/assets/img/歌手详情.jpg')}"
+                        alt="">
                     </div>
 
                     <ul class="mn">
@@ -49,7 +51,10 @@
                     <ul class="sm-list">
                         <li v-for="artist in simiArtist.slice(0,9)" :key="artist.id">
                             <router-link :to="`/singer?id=${artist.id}`">
-                                <img :src="artist.picUrl+'?param=70y70'" alt="">
+                                 <img  
+                                 v-lazy="{src: artist.picUrl+'?param=70y70', error: require('@/assets/img/歌手.png'), loading: require('@/assets/img/歌手.png')}"
+                                 alt=""> 
+
                                 <span>{{artist.name}}</span>
                             </router-link>
                         </li>

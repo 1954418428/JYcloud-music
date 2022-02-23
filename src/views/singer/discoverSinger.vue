@@ -42,7 +42,9 @@
                     <li v-for="item in artists" :key="item.id">
                         <div>
                             <router-link :to="`/singer?id=${item.id}`">
-                                <img :src="item.picUrl+'?param=160y160'" alt="">
+                                <img  
+                                 v-lazy="{src: item.picUrl+'?param=160y160', error: require('@/assets/img/歌手.png'), loading: require('@/assets/img/歌手.png')}"
+                                 alt=""> 
                             </router-link>
                         </div>
                         <router-link :to="`/singer?id=${item.id}`" class="singer-name">{{item.name}}</router-link>

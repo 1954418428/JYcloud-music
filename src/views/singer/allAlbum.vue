@@ -4,7 +4,11 @@
             <li class="album-item" v-for="(item) in hotAlbums" :key="item.id">
                 <div  class="album-img">
                     <router-link :to="`/album?id=${item.id}`">
-                        <img :src="item.picUrl+'?param=120y120'" alt="">
+                        <img
+                         v-lazy="{src: item.picUrl+'?param=120y120', error: require('@/assets/img/歌单.png'), loading: require('@/assets/img/歌单.png')}"
+                          alt="" 
+                        >
+
                         <img src="@/assets/img/album.png" alt="" class="album-right" draggable="false">
                     </router-link>
 
