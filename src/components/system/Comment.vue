@@ -17,7 +17,8 @@
             <div class="right-bottom-box" v-if="comment.commentId">
                 <span class="comment-time" v-if="comment.time">{{moment(parseInt(comment.time)).format('YYYY/MM/DD hh:mm:ss')}}</span>
                 <span class="comment-liked-count"><i class="iconfont icon-dianzan"></i>{{comment.likedCount}}</span>
-                <span @click="showRootReplyItem" style="cursor: pointer;" >回复</span>
+                <span @click="replyIsChecked" 
+                style="cursor: pointer;">回复</span>
             </div>
         </div>
     </div>
@@ -27,6 +28,7 @@
 </template>
 
 <script>
+import {mapState,mapActions,mapMutations} from 'vuex';
 
 export default {
     name: "Comment",
@@ -42,11 +44,36 @@ export default {
             required:true
         }
     },
-    computed: {},
+    computed: {
+         ...mapState("UserModule",[
+            'userState'
+        ]),
+    },
     watch: {},
     methods: {
-        showRootReplyItem(){
-            this.$emit("updateShowReplyId",this.rootCommentId);
+         ...mapMutations('CommentModule',[
+            'updateCommentId'
+        ]),
+        replyIsChecked(){
+            if(this.userState.isLogin){
+                this.updateCommentId({
+                    commentId:this.comment.commentId,
+                    nickname:this.comment.user.nickname,
+                    rc:this.comment.content,
+                    beRepliedCommentId:  this.comment.beReplied.length? this.comment.beReplied[0].beRepliedCommentId : 0
+                });
+                this.$eventBus.$emit("move");
+            }else{
+                this.$confirm('您未登入！是否跳转登入界面？', '提示',
+                {
+                    customClass:'b'
+                })
+                .then(() => {
+                    this.$router.push({path:'/login'})
+                }).catch(()=>{
+                })
+            }
+            
         }
     },
     beforeCreated() {},
@@ -102,5 +129,8 @@ export default {
     margin-right: 8px;
 }
 
+.b{
+    background-color: red !important;
+}
 
 </style>

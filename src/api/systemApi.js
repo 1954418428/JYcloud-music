@@ -153,7 +153,7 @@ export default {
             })
         })
     },
-    //?keywords=周杰
+    //推荐搜索
     suggestSearch:function(keywords){
         return new Promise((resolve,reject)=>{
             request.get('/search/suggest',{
@@ -165,5 +165,24 @@ export default {
             })
         })
     },
+
+    //评论
+    comment:function(data){
+        //t:1 发送, 2 回复
+        //type: 0:歌曲 1:mv  2:歌单 3:专辑
+        //id:对应资源 id
+        // content :要发送的内容
+        // commentId :回复的评论 id (回复评论时必填)
+        data.timeStamp=new Date().getTime()
+        return new Promise((resolve,reject)=>{
+            request.get('/comment',{
+                ...data,
+            }).then(res=>{
+                resolve(res)
+            }).catch(err=>{
+                reject(err)
+            })
+        })
+    }
 
 }

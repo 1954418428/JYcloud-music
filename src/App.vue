@@ -50,8 +50,7 @@ export default {
     beforeCreated() {},
     created() {
       //10分钟执行一次
-      this.workerTImer = setInterval(() => {
-        console.log(workerTImer);
+      this.workerTimer = setInterval(() => {
         for (let  i = 0; i < localStorage.length; i++) {
             let key = localStorage.key(i); //获取本地存储的Key
             if(key.startsWith(this.catchStorage.prefix)){
@@ -63,7 +62,8 @@ export default {
     },
     mounted(){
 
-    }
+    },
+
     }
 </script>
 

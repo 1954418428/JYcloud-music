@@ -43,13 +43,15 @@ export default  class CatchStorage{
 
     // 移除所有缓存数据
     clearCatch(){
-        for (let  i = 0; i < localStorage.length; i++) {
-            let key = localStorage.key(i); //获取本地存储的Key
-            console.log(key);
+        const localStorageData =  JSON.parse(JSON.stringify(localStorage)) ;
+        // console.log(localStorageData);
+        for(let key in localStorageData){
             if(key.startsWith(this.prefix)){
+                // console.log("删除",key);
                 localStorage.removeItem(key);
             }
         }
+
     }
 }
 

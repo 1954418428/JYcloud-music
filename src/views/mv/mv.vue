@@ -58,7 +58,9 @@
                         </span>
                     </div>
                     <div class="reply-wrap">
-                        <Replay></Replay>
+                        <Replay
+                        @emitAddComment="addComment"
+                        ></Replay>
                     </div>
 
                     <div v-show="hotComments.length">
@@ -129,6 +131,9 @@
 import Replay from '../../components/system/Replay';
 import Comment from '../../components/system/Comment';
 
+import {mapState,mapActions,mapMutations} from 'vuex';
+
+
 import {mvApi} from '@/api';
 
 
@@ -153,6 +158,7 @@ export default {
             hotComments:[],//热评
             comments:[],//新评论
             simiMvList:[],//相似mv列表
+        
         };
     },
     props:{},
@@ -161,6 +167,12 @@ export default {
         '$route.query': {
             async handler (){
                 if(this.$route.query.id){
+                    this.initCommentQueryData({
+                        t:1,
+                        type:1,
+                        id:this.$route.query.id
+                    })
+
                     this.hotComments = []
                     this.comments=[]
 
@@ -185,6 +197,10 @@ export default {
         }
     },
     methods: {
+        ...mapMutations('CommentModule',[
+            'initCommentQueryData','updateCommentId'
+        ])
+        ,
         updateVideoState(type){
             if(type == 'play'){
                 this.$refs.video.play()
@@ -213,8 +229,10 @@ export default {
             mvApi.getSimiMv(this.$route.query.id).then(res=>{
                 this.simiMvList = res.mvs
             })
-            
-        
+        },
+        addComment(comment){
+            console.log('comment',comment);
+            this.comments.unshift(comment);
         }
     },
     beforeCreated() {

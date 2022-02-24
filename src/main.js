@@ -18,6 +18,8 @@ Vue.use(ElementUI)
 import VueLazyload from "vue-lazyload";
 Vue.use(VueLazyload);
 
+//事件总线
+Vue.prototype.$eventBus = new Vue()
 
 Vue.config.productionTip = false
 

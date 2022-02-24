@@ -7,6 +7,7 @@ import PlayerModule from './PlayerModule'
 import UserModule from './UserModule'
 import CollectModule from './CollectModule'
 import CreateSheetModule from './CreateSheetModule'
+import CommentModule from './CommentModule'
 
 Vue.use(Vuex)
 
@@ -15,7 +16,8 @@ export default new Vuex.Store({
     PlayerModule,
     UserModule,
     CollectModule,
-    CreateSheetModule
+    CreateSheetModule,
+    CommentModule
   },
   plugins: [createVuexAlong(
     {
@@ -24,7 +26,11 @@ export default new Vuex.Store({
         list:["UserModule"]
       },
       session: {
-        list: ["PlayerModule","CollectModule","CreateSheetModule"] // 保存 count 和模块 ma 中的 a1 到 sessionStorage
+        list: ["PlayerModule","CollectModule","CreateSheetModule"]
+      },
+      session: {
+        list: ["CommentModule","UserModule"],
+        isFilter: true 
       },
     }
   )]//vuex-along

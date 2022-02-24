@@ -64,6 +64,7 @@ export default {
         // id mv id
         // limit 数量
         // offset 偏移量
+        data.timeStamp=new Date().getTime()
         return new Promise((resolve,reject)=>{
             request.get('/comment/mv',{
                 ...data

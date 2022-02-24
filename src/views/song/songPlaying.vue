@@ -27,7 +27,7 @@
                         </span>
                 </div>
                 <div class="reply-wrap">
-                        <Replay></Replay>
+                        <Replay @emitAddComment="addComment"></Replay>
                     </div>
 
                     <div v-show="hotComments.length">
@@ -61,7 +61,7 @@ import Lyric from '../../components/song/Lyric';
 import Replay from '../../components/system/Replay';
 import Comment from '../../components/system/Comment';
 
-import {mapState} from 'vuex';
+import {mapState,mapMutations} from 'vuex';
 import {songApi} from '@/api';
 export default {
     name: "",
@@ -89,6 +89,12 @@ export default {
     watch: {
         '$route.query.id':{
             handler(){
+                this.initCommentQueryData({
+                    t:1,
+                    type:0,
+                    id:this.$route.query.id
+                })
+
                 this.hotComments = []
                 this.comments=[]
                 songApi.getSongCommentList(
@@ -116,7 +122,15 @@ export default {
             immediate:true
         }
     },
-    methods: {},
+    methods: {
+        ...mapMutations('CommentModule',[
+            'initCommentQueryData'
+        ]),
+        addComment(comment){
+            console.log('comment',comment);
+            this.comments.unshift(comment);
+        }
+    },
     beforeCreated() {},
     created() {
 

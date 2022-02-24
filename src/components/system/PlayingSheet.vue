@@ -84,7 +84,10 @@ export default {
             this.asyncUpdateIsLock({
                     isLock:false
             })
-            this.asyncUpdateAudio({currentIndex:index})
+            if(index !=this.player.currentIndex){
+                 this.asyncUpdateAudio({currentIndex:index})
+            }
+           
         },
         gotoMv(mvid){
             console.log(mvid);
