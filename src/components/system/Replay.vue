@@ -112,7 +112,7 @@ export default {
                             time,
                             user
                         }
-                        console.log('comment',comment);
+                        // console.log('comment',comment);
                         this.$emit('emitAddComment', comment);
                         this.deleteCommentId()
                     

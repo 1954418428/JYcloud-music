@@ -232,6 +232,7 @@ export default {
         },
         addComment(comment){
             console.log('comment',comment);
+            this.page.total+=1;
             this.comments.unshift(comment);
         }
     },

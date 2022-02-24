@@ -15,7 +15,7 @@
             </div>
 
             <div class="right-bottom-box" v-if="comment.commentId">
-                <span class="comment-time" v-if="comment.time">{{moment(parseInt(comment.time)).format('YYYY/MM/DD hh:mm:ss')}}</span>
+                <span class="comment-time" v-if="comment.time">{{moment(parseInt(comment.time)).format('YYYY/MM/DD HH:mm:ss')}}</span>
                 <span class="comment-liked-count"><i class="iconfont icon-dianzan"></i>{{comment.likedCount}}</span>
                 <span @click="replyIsChecked" 
                 style="cursor: pointer;">回复</span>
