@@ -90,7 +90,7 @@
                         mv简介
                     </div>
                     <p>
-                        {{mvData.desc ? mvData.desc : mvData.briefDesc}}
+                        {{mvData.desc ? mvData.desc : mvData.briefDesc?mvData.briefDesc:'占无简介'}}
                     </p>
                 </div>
                 <div class="similar-mv">

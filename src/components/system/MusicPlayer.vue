@@ -1,5 +1,8 @@
 <template>
-    <div class="music-player-box" ref="musicPlayer" style="left: -400px;" 
+    <!-- style="left: -400px;"  -->
+    <div class="music-player-box" ref="musicPlayer" 
+
+        :class="{'show':player.isLock,'hidden':!player.isLock}"
     >
         <audio
         ref="audioObj"
@@ -47,13 +50,13 @@ export default {
         "audio","player"
     ]),
     watch: {
-        "player.isLock":{
-            handler(){
-                // console.log("player.isLock被改变,当前值为:",this.player.isLock);
-                this.lockTimer(!this.player.isLock);
-            },
-            immediate: true
-        }
+        // "player.isLock":{
+        //     handler(){
+        //         // console.log("player.isLock被改变,当前值为:",this.player.isLock);
+        //         // this.lockTimer(!this.player.isLock);
+        //     },
+        //     immediate: true
+        // }
     },
     methods: {
         ...mapMutations('PlayerModule',[
@@ -66,36 +69,36 @@ export default {
            "onEnded","asyncUpdateIsLock"
         ]),
 
-        lockTimer(isLock){
-            // console.log("lockTimer被执行");
-            this.timer = setInterval(()=>{
-                let curr = parseInt(this.$refs.musicPlayer.style.left);
-                if(isLock){
-                    if(curr <= -400){
-                        // console.log("销毁");
-                        clearInterval(this.timer)
-                        return;
-                    }
-                }else{
-                     if(curr >= 0){
-                        // console.log("销毁");
-                        clearInterval(this.timer)
-                        return;
-                    }
-                }
-                let v;
-                if(isLock){
-                    //此时是固定的 变为未固定
-                    // 0 -> -400
-                    v=curr - 10;
-                }else{
-                    //此时是未固定的 变为固定
-                    //-400 -> 0
-                    v=curr + 10;
-                }
-                this.$refs.musicPlayer.style.left  = v+"px"
-            },10)
-        },
+        // lockTimer(isLock){
+        //     // console.log("lockTimer被执行");
+        //     this.timer = setInterval(()=>{
+        //         let curr = parseInt(this.$refs.musicPlayer.style.left);
+        //         if(isLock){
+        //             if(curr <= -400){
+        //                 // console.log("销毁");
+        //                 clearInterval(this.timer)
+        //                 return;
+        //             }
+        //         }else{
+        //              if(curr >= 0){
+        //                 // console.log("销毁");
+        //                 clearInterval(this.timer)
+        //                 return;
+        //             }
+        //         }
+        //         let v;
+        //         if(isLock){
+        //             //此时是固定的 变为未固定
+        //             // 0 -> -400
+        //             v=curr - 10;
+        //         }else{
+        //             //此时是未固定的 变为固定
+        //             //-400 -> 0
+        //             v=curr + 10;
+        //         }
+        //         this.$refs.musicPlayer.style.left  = v+"px"
+        //     },10)
+        // },
         lockMusicPlayer(){
             if(this.player.isLock){
                 // console.log("显示 -> 隐藏");
@@ -168,5 +171,14 @@ export default {
         top: 6px;
         left: -24px;
     }
+}
+
+.show{
+    transition: all .8s  ease ;
+    left: 0px;
+}
+.hidden {
+    transition: all .8s  ease ;
+    left: -400px;
 }
 </style>
